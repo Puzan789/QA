@@ -1,0 +1,21 @@
+[project]
+name = "bb"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=0.3.24",
+    "langchain-community>=0.3.23",
+    "langchain-groq>=0.3.2",
+    "langchain-huggingface>=0.1.2",
+    "langchain-qdrant>=0.2.0",
+    "pandas>=2.2.3",
+    "streamlit>=1.44.1",
+]
+
+[dependency-groups]
+dev = [
+    "fastapi[standard]>=0.115.12",
+    "ipykernel>=6.29.5",
+]

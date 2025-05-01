@@ -1,0 +1,46 @@
+
+# RAG-Based QA System For Recipe 
+
+## Setup
+
+To install dependencies, use `uv`:
+
+```bash
+uv sync 
+```
+
+## Vector Store: Qdrant
+
+This project uses **Qdrant** as a vector store.
+
+You can run it locally using Docker:
+
+```bash
+docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
+```
+
+Or use **Qdrant Cloud**, which is already set up in this project.
+
+To create your own cloud instance, go to: [https://qdrant.tech](https://qdrant.tech)
+
+## LLM: ChatGroq
+
+This project uses **ChatGroq** .
+
+Set the following environment variables:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+QDRANT_URL=your_qdrant_cloud_url
+QDRANT_API_KEY=your_qdrant_api_key
+```
+
+## Run the App
+
+To run the project:
+
+```bash
+streamlit run app.py
+```
+
+
