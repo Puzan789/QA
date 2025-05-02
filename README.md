@@ -3,7 +3,20 @@
 
 ## Setup
 
-To install dependencies, use `uv`:
+To install dependencies, use `uv`. First, install `uv` if you haven’t already:
+
+### Ubuntu/Linux:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+````
+
+### Windows (PowerShell):
+
+```powershell
+irm https://astral.sh/uv/install.ps1 | iex
+```
+
+Then, install dependencies:
 
 ```bash
 uv sync 
@@ -25,7 +38,7 @@ To create your own cloud instance, go to: [https://qdrant.tech](https://qdrant.t
 
 ## LLM: ChatGroq
 
-This project uses **ChatGroq** .
+This project uses **ChatGroq**.
 
 Set the following environment variables:
 
@@ -42,5 +55,3 @@ To run the project:
 ```bash
 streamlit run app.py
 ```
-
-

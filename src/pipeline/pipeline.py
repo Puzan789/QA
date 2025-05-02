@@ -32,3 +32,10 @@ class QAPipeline:
             vectorembedding=self.embeddings,
             query=query,
         )
+    async def search_web(self, query):
+        """
+        Search the web for a query.
+        """
+        return await self.answer_query.search_web(
+            query=query
+        )

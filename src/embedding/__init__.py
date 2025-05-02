@@ -1,0 +1,1 @@
+from .embedding import all_minilm_l6_v2

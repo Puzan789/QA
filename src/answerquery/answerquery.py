@@ -1,13 +1,13 @@
 from langchain_groq import ChatGroq
+from langchain_community.utilities import GoogleSerperAPIWrapper
 from src.settings import settings
 from src.vectorstore import answer_query_from_existing_collection
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnablePassthrough
-from langchain_core.output_parsers import StrOutputParser
-
+from src.schemas import RagResponse
 
 class AnswerQuery:
-    def __init__(self, model_name: str = "llama-3.1-8b-instant"):
+    def __init__(self, model_name: str = "llama-3.3-70b-versatile"):
         """
         Class to handle the Groq model for answering queries.
         """
@@ -17,6 +17,8 @@ class AnswerQuery:
             max_tokens=512,
             api_key=settings.GROQ_API_KEY,
         )
+        self.serper = GoogleSerperAPIWrapper(serper_api_key=settings.SERPER_API_KEY)
+
     def format_docs(self,docs):
         return "\n\n".join(doc.page_content for doc in docs)
 
@@ -40,7 +42,9 @@ class AnswerQuery:
         Answer using ONLY the context below:
         Context: {context}
         Question: {question}
-        If context doesn't match with the question, say,I couldn’t find information about this.
+        If context doesn't match with the question, say,I couldn’t find information about this,and set web_search to true.
+        Otherwise, set web_search to false and answer only according to the context.
+    
 
         """
         prompt = PromptTemplate.from_template(template)
@@ -51,12 +55,38 @@ class AnswerQuery:
 
             }
             | prompt
-            | self.llm
-            | StrOutputParser()
+            | self.llm.with_structured_output(
+              RagResponse,
+            )
+            
         )
 
         response = chain.invoke(query)
         return response
+    async def search_web(self, query: str):
+        """Search the web for a query"""
+        response =  self.serper.run(query)
+        template = """
+        Answer using ONLY the context below:
+        Context: {context}
+        Question: {question}
+        If context doesn't match with the question, say,I couldn’t find information about this.
+        """
+        prompt = PromptTemplate.from_template(template)
+        chain = (
+            {
+                "context": lambda x :response,
+                "question": RunnablePassthrough(),
+
+            }
+            | prompt
+            | self.llm
+            )
+            
+
+        response = chain.invoke(query)
+        return response.content
+
 
 
 if __name__ == "__main__":
