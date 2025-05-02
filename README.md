@@ -55,3 +55,18 @@ To run the project:
 ```bash
 streamlit run app.py
 ```
+
+## Flow Diagram
+![alt text](dia.png)
+
+## Todo
+
+- [ ] **Create API with FastAPI**
+  - Set up FastAPI endpoints for question answering.
+
+- [ ] **Implement Reranking Strategy for Retrieval**
+  - Add a reranking approach to improve document relevance.
+
+- [ ] **Add Pre-Rephrasing Strategy**
+  - Rephrase user questions before querying Qdrant.
+
