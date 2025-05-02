@@ -59,6 +59,9 @@ streamlit run app.py
 ## Flow Diagram
 ![alt text](dia.png)
 
+
+## Video 
+<video controls src="working.mp4" title="Title"></video>
 ## Todo
 
 - [ ] **Create API with FastAPI**
